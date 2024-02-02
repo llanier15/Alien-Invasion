@@ -16,6 +16,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
 		fire_bullet(ai_settings, screen, ship, bullets)
 	elif event.key == pygame.K_q:
 		sys.exit()
+	elif event.key == pygame.K_p:
+		pause(screen, ai_settings)
 		
 def fire_bullet(ai_settings, screen, ship, bullets):
 	"""Fire a bullet if limit not reached yet."""
@@ -77,98 +79,95 @@ def check_play_button(ai_settings, screen, stats, sb, play_button,
 		create_fleet(ai_settings, screen, ship, aliens)
 		ship.center_ship()
 
-def check_help_button(ai_settings, screen, stats, sb, help_button, ship, aliens,
-		      bullets, mouse_x, mouse_y):
-        """Show instructions of the game when player clicks Guide."""
-        help_clicked = help_button.rect.collidepoint(mouse_x, mouse_y)
+def check_help_button(ai_settings, screen, stats, sb, help_button, ship, aliens, bullets, mouse_x, mouse_y):
+	"""Show instructions of the game when player clicks Guide."""
+	help_clicked = help_button.rect.collidepoint(mouse_x, mouse_y)
 	if help_clicked == True and stats.game_active == False:
 		instructions = True
 		while instructions:
-		    for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-			    sys.exit()
-			if event.type == pygame.KEYDOWN:
-			    if event.key == pygame.K_c:
-				instructions = False
-			    elif event.key == pygame.K_q:
-				sys.exit()
-		    screen.fill((230, 230, 230))
-
-                    pygame.font.init()
-		    screen_rect - screen.get_rect()
-
-                    myfont = pygame.font.SysFont('Consola', 80)
-		    text = myfont.render('Welcome to Alien Invasion!', True, (0, 185, 0), ai_settings.bg_color)
-		    text1_rect = text.get_rect()
-		    text1_rect.centerx = screen_rect.centerx
-		    text1_rect.centery = screen_rect.centery - 300
-		    screen.blit(text, text1_rect)
-
-                    msg1 = 'The objective of this game is to destroy the fleet of aliens before it reaches your spaceship or earth!'
-		    msg2 = ' 1. You have 4 ships available, but if an alien crashes into your spaceship or onto earth your current'
-		    msg3 = '    spaceship will be destroyed.'
-		    msg4 = ' 2. Every time you lose a spaceship, the level which you are on will restart.'
-		    msg5 = ' 3. It is GAME OVER when you lose all of your spaceships, located in top left corner.'
-		    msg6 = ' 4. The spaceship can shoot only 3 bullets at a time, but it takes one to shoot down an alien.'
-		    msg7 = ' 5. Every time you destroy an alien, you accumulate points! Can you get the high score?'
-		    msg8 = ' 6. Every time you shoot down the fleet of aliens you go to the next level, but the aliens are faster!'
-		    msg9 = ' 7. Move your spaceship with the Left and Right arrow keys, press Spacebar to shoot!'
-		    msg10 = ' 8. While playing you can press Q to quit, and P to pause the game.'
-		    messages = [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10]
-
-                    count = 0
-		    for message in messages:
-			myfont = pygame.font.SysFont('Consola', 30)
-			text = myfont.render(message, True, (0, 0, 0), ai_settings.bg_color)
-			text2_rect - text.get_rect()
-			text2_rect.left = 80
-			text2_rect.top = 180 + count*38
-			count += 1
-			screen.blit(text, text2_rect)
-                   
-		     myfont = pygame.font.SysFont('Consola', 32)
-		     text = myfont.render('Press C to continue to the menu.', True, (185, 0, 0), 
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					sys.exit()
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_c:
+						instructions = False
+					elif event.key == pygame.K_q:
+						sys.exit()
+			screen.fill((230, 230, 230))
+			
+			pygame.font.init()
+			screen_rect = screen.get_rect()
+			
+			myfont = pygame.font.SysFont('Consola', 80)
+			text = myfont.render('Welcome to Alien Invasion!', True, (0, 185, 0), ai_settings.bg_color)
+			text1_rect = text.get_rect()
+			text1_rect.centerx = screen_rect.centerx
+			text1_rect.centery = screen_rect.centery - 300
+			screen.blit(text, text1_rect)
+			
+			msg1 = 'The objective of this game is to destroy the fleet of aliens before it reaches your spaceship or earth!'
+			msg2 = ' 1. You have 4 ships available, but if an alien crashes into your spaceship or onto earth your current'
+			msg3 = '    spaceship will be destroyed.'
+			msg4 = ' 2. Every time you lose a spaceship, the level which you are on will restart.'
+			msg5 = ' 3. It is GAME OVER when you lose all of your spaceships, located in top left corner.'
+			msg6 = ' 4. The spaceship can shoot only 3 bullets at a time, but it takes one to shoot down an alien.'
+			msg7 = ' 5. Every time you destroy an alien, you accumulate points! Can you get the high score?'
+			msg8 = ' 6. Every time you shoot down the fleet of aliens you go to the next level, but the aliens are faster!'
+			msg9 = ' 7. Move your spaceship with the Left and Right arrow keys, press Spacebar to shoot!'
+			msg10 = ' 8. While playing you can press Q to quit, and P to pause the game.'
+			messages = [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10]
+			
+			count = 0
+			for message in messages:
+				myfont = pygame.font.SysFont('Consola', 30)
+				text = myfont.render(message, True, (0, 0, 0), ai_settings.bg_color)
+				text2_rect = text.get_rect()
+				text2_rect.left = 80
+				text2_rect.top = 180 + count*38
+				count += 1
+				screen.blit(text, text2_rect)
+			
+			myfont = pygame.font.SysFont('Consola', 32)
+			text = myfont.render('Press C to continue to the menu.', True, (185, 0, 0), 
 					  ai_settings.bg_color)
-		     text1_rect = text.get_rect()
-		     text1_rect.centerx = screen_rect.centerx
-		     text1_rect.centery = screen_rect.centery + 275
-		     screen.blit(text, text1_rect)
-
-                     pygame.display.flip()
+			text1_rect = text.get_rect()
+			text1_rect.centerx = screen_rect.centerx
+			text1_rect.centery = screen_rect.centery + 275
+			screen.blit(text, text1_rect)
+			
+			pygame.display.flip()
                         
 def pause(screen, ai_settings):
-    paused = True
-    while paused:
-	for event in pygame.event.get():
-	    if event.type == pygame.QUIT:
-		sys.exit()
-	    if event.type == pygame.KEYDOWN:
-		if event.key == pygame.K_c:
-		    paused = False
-		elif event.key == pygame.K_q:
-		    sys.exit()
-	screen.fill((230, 230, 230))
-
-        pygame.font.init()
-	screen_rect = screen.get_ret()
-
-        myfont = pygame.font.SysFont('Consola', 80)
-	text = myfont.render('Paused Game!', True, (0, 185, 0), ai_settings.bg_color)
-	text1_rect = text.get_rect()
-	text1_rect.center = screen_rect.center
-	screen.blit(text, text1_rect)
-
-        myfont = pygame.font.SysFont('Consola', 32)
-	text = myfont.render('Press C to continue playing or Q to quit.', True, (185, 0, 0))
-	text2_rect = text.get_rect()
-	text2_rect.centerx = screen_rect.centerx
-	text2_rect.centery = screen_rect.centery + 70
-	screen.blit(text, text2_rect)
-
-        pygame.display.flip()
+	paused = True
+	while paused:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				sys.exit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_c:
+					paused = False
+				elif event.key == pygame.K_q:
+					sys.exit()
+		screen.fill((230, 230, 230))
 		
-def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
-        play_button, help_button):
+		pygame.font.init()
+		screen_rect = screen.get_rect()
+		
+		myfont = pygame.font.SysFont('Consola', 80)
+		text = myfont.render('Paused Game!', True, (0, 185, 0), ai_settings.bg_color)
+		text1_rect = text.get_rect()
+		text1_rect.center = screen_rect.center
+		screen.blit(text, text1_rect)
+		
+		myfont = pygame.font.SysFont('Consola', 32)
+		text = myfont.render('Press C to continue playing or Q to quit.', True, (185, 0, 0))
+		text2_rect = text.get_rect()
+		text2_rect.centerx = screen_rect.centerx
+		text2_rect.centery = screen_rect.centery + 70
+		screen.blit(text, text2_rect)
+		pygame.display.flip()
+		
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, help_button):
 	"""Update images on the screen and flip to the new screen."""
 	screen.fill(ai_settings.bg_color)
 	
@@ -182,8 +181,9 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 	sb.show_score()
 	
 	# Draw the play button if the game is inactive.
-	if not stats.game_active:
+	if stats.game_active == False:
 		play_button.draw_button()
+		help_button.draw_help()
 		
 	# Make the most recently drawn screen visible.
 	pygame.display.flip()
@@ -324,3 +324,4 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
 	
 	# Look for aliens hitting the bottom.
 	check_aliens_bottom(ai_settings, screen, stats, sb, ship, aliens, bullets)
+
